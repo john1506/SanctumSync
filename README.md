@@ -1,15 +1,12 @@
 ![SusAlert](/assets/banner.png)
 
 # SusAlert
-SusAlert is an alt1 toolkit app originally created for the Croesus bossfight in RuneScape. It tracks a boss' attacks and provides visual and (optional) audio cues. It can also display the state of all four statues and monitor the Crystal Mask spell. This fork adds experimental support for all Sanctum of Rebirth bosses including Vermyx, Kezalam and Nakatra.
+SusAlert is an alt1 toolkit app designed for the Sanctum of Rebirth bosses in RuneScape. It tracks a boss' attacks and provides visual and (optional) audio cues. It can also monitor the Crystal Mask spell. The app currently supports Vermyx, Kezalam and Nakatra.
 
 ![SusAlert-MainWindow](/assets/mainscreen-overview.png)
 ## How to use
-SusAlert is easy to setup and use, simply install (instructions below) and open the plugin in alt1 toolkit, and you're good to go! SusAlert will automatically detect when the fight starts and ends. The default attack schedule is still Croesus, but you can switch to a Sanctum of Rebirth boss by editing the `bossType` variable in `scripts/script.js`.
+SusAlert is easy to setup and use, simply install (instructions below) and open the plugin in alt1 toolkit, and you're good to go! SusAlert will automatically detect when the fight starts and ends. The default attack schedule is Vermyx, but you can switch to another Sanctum of Rebirth boss by editing the `bossType` variable in `scripts/script.js`.
 Currently the schedules for Vermyx, Kezalam and Nakatra are simplified and may not perfectly match in-game timings. There are also some features that are not enabled by default. These features can be enabled/disabled in the settings, which can be accessed by pressing the cog icon in the top right.
-
-The timer may drift out of sync after the mid energy fungi phase due to the variable nature of this part of the fight, but this can be manually synced by clicking the sync button (or pressing alt + 1) when the mid fungi dies, it's also possible to tweak the timing in the settings if you have very consistent runs.
-
 ## Requirements
 To function SusAlert needs the following:
 - Alt1 toolkit must be installed, you can install that [here](https://runeapps.org/alt1).
@@ -17,7 +14,7 @@ To function SusAlert needs the following:
 - Interface scaling needs to be at 100% (this is the default).
 - Game messages need to be turned on (plugin is tested with fontsize 12).
 - It is recommended to turn timestamps on in the chat box to improve chatreader accuracy. This can be changed by ticking the box in Gameplay Settings > Chat & Social > Chat Customisation > Local timestamps in chat box.
-- The recommended interface transparency is 0%, a transparent chatbox may cause issues with the statue indicators.
+- The recommended interface transparency is 0%, as a transparent chatbox may cause overlay detection issues.
 
 ## Installation
 To install SusAlert copy & paste this link into your browser:<br/>
