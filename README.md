@@ -1,11 +1,12 @@
 ![SusAlert](/assets/banner.png)
 
 # SusAlert
-SusAlert is an alt1 toolkit app for the Croesus bossfight in RuneScape, it keeps track of Croesus' attacks and provides you with visual and (optional) audio cues. In addition to that it can also display the state of all 4 statues aswell as the status of the crystal mask spell, and alert you when it expires.
+SusAlert is an alt1 toolkit app originally created for the Croesus bossfight in RuneScape. It tracks a boss' attacks and provides visual and (optional) audio cues. It can also display the state of all four statues and monitor the Crystal Mask spell. This fork adds experimental support for all Sanctum of Rebirth bosses including Vermyx, Kezalam and Nakatra.
 
 ![SusAlert-MainWindow](/assets/mainscreen-overview.png)
 ## How to use
-SusAlert is easy to setup and use, simply install (instructions below) and open the plugin in alt1 toolkit, and you're good to go! SusAlert will automatically detect when the Croesus fight starts and ends. There are also some features that are not enabled by default. These features can be enabled/disabled in the settings, which can be accessed by pressing the cog icon in the top right.
+SusAlert is easy to setup and use, simply install (instructions below) and open the plugin in alt1 toolkit, and you're good to go! SusAlert will automatically detect when the fight starts and ends. The default attack schedule is still Croesus, but you can switch to a Sanctum of Rebirth boss by editing the `bossType` variable in `scripts/script.js`.
+Currently the schedules for Vermyx, Kezalam and Nakatra are simplified and may not perfectly match in-game timings. There are also some features that are not enabled by default. These features can be enabled/disabled in the settings, which can be accessed by pressing the cog icon in the top right.
 
 The timer may drift out of sync after the mid energy fungi phase due to the variable nature of this part of the fight, but this can be manually synced by clicking the sync button (or pressing alt + 1) when the mid fungi dies, it's also possible to tweak the timing in the settings if you have very consistent runs.
 
