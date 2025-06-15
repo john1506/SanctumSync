@@ -36,21 +36,53 @@ let midOffset = 14;
 let debugMode = false;
 let debugStart = false;
 
-// Dictionary containing croesus' attacks, their timings and the counter move
-let attacks = {
-  15: ["Red bomb", "Move"],
-  27: ["Fairy ring", "Move"],
-  39: ["Slimes", "Evade"],
-  51: ["Yellow bomb", "Move"],
-  63: ["Stun", "Use anticipation"],
-  72: ["Sticky fungi", "Click feet"],
-  87: ["Green bomb", "Move"],
-  99: ["Fairy ring", "Move"],
-  111: ["Slimes", "Evade"],
-  123: ["Blue bomb", "Move"],
-  135: ["Stun", "Use anticipation"],
-  144: ["Mid energy fungi", "Go to mid"],
-}
+// Set current boss. Options: 'Croesus', 'Vermyx', 'Kezalam', 'Nakatra'.
+// This determines which attack schedule is used.
+let bossType = 'Vermyx';
+
+// Attack schedules for supported bosses
+const bossAttacks = {
+  'Croesus': {
+    15: ["Red bomb", "Move"],
+    27: ["Fairy ring", "Move"],
+    39: ["Slimes", "Evade"],
+    51: ["Yellow bomb", "Move"],
+    63: ["Stun", "Use anticipation"],
+    72: ["Sticky fungi", "Click feet"],
+    87: ["Green bomb", "Move"],
+    99: ["Fairy ring", "Move"],
+    111: ["Slimes", "Evade"],
+    123: ["Blue bomb", "Move"],
+    135: ["Stun", "Use anticipation"],
+    144: ["Mid energy fungi", "Go to mid"],
+  },
+
+  // Simplified Vermyx rotation. Timings are approximate.
+  'Vermyx': {
+    9: ["Moonstone Shard", "Avoid"],
+    18: ["Wyrmfire", "Dodge"],
+    27: ["Moonstone Shard", "Avoid"],
+    36: ["Wyrmfire (all)", "Move"],
+  },
+
+  // Approximate rotation for Kezalam
+  'Kezalam': {
+    12: ["Sanctum Blast", "Move"],
+    24: ["Moonstone Prison", "Freedom"],
+    36: ["Sanctum Blast", "Move"],
+    48: ["Unstable Scarabs", "Stun"],
+  },
+
+  // Simplified Nakatra rotation
+  'Nakatra': {
+    6:  ["Soulfire Waves", "Dodge"],
+    15: ["Obliterate", "Resonance"],
+    24: ["Soulfire Waves", "Dodge"],
+    33: ["Summon Scarabs", "Stun"],
+  }
+};
+
+let attacks = bossAttacks[bossType];
 
 // Dictionary containing the countdown message colors, corresponding to time remaining in seconds
 let countdownColors = {
@@ -592,9 +624,12 @@ function startEncounter(offset = 0) {
   isPaused = false;
   startDate = Date.now() + offset;
   oldLineTime = new Date();
-  
+
   message("Encounter started");
-  message("Next attack: Red bomb","upcomingBox");
+  let firstKey = Object.keys(attacks)[0];
+  if (firstKey) {
+    message("Next attack: " + attacks[firstKey][0],"upcomingBox");
+  }
 }
 
 // End of boss encounter
