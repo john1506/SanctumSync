@@ -25,7 +25,6 @@ let tooltipSetting = 1;
 let styleSetting = 0;
 let countdownSoundSetting = 0;
 let compactModeSetting = 1;
-let extendedModeSetting = 1;
 let crystalMaskSetting = 1;
 let crystalMaskBorderSetting = 1;
 let crystalMaskSoundSetting = 0;
@@ -36,26 +35,12 @@ let midOffset = 14;
 let debugMode = false;
 let debugStart = false;
 
-// Set current boss. Options: 'Croesus', 'Vermyx', 'Kezalam', 'Nakatra'.
+// Set current boss. Options: 'Vermyx', 'Kezalam', 'Nakatra'.
 // This determines which attack schedule is used.
 let bossType = 'Vermyx';
 
 // Attack schedules for supported bosses
 const bossAttacks = {
-  'Croesus': {
-    15: ["Red bomb", "Move"],
-    27: ["Fairy ring", "Move"],
-    39: ["Slimes", "Evade"],
-    51: ["Yellow bomb", "Move"],
-    63: ["Stun", "Use anticipation"],
-    72: ["Sticky fungi", "Click feet"],
-    87: ["Green bomb", "Move"],
-    99: ["Fairy ring", "Move"],
-    111: ["Slimes", "Evade"],
-    123: ["Blue bomb", "Move"],
-    135: ["Stun", "Use anticipation"],
-    144: ["Mid energy fungi", "Go to mid"],
-  },
 
   // Simplified Vermyx rotation. Timings are approximate.
   'Vermyx': {
@@ -305,10 +290,9 @@ function readChatbox()
       }
 
       // Check for lines indicating the bossfight has ended
-      else if (isAttackable && (lines[idx].text.includes("Croesus sleeps...and we enjoy a brief respite") ||
-                                lines[idx].text.includes("We wouldn't have managed that without") || 
-                                lines[idx].text.includes("The Cathedral is safe...for now") || 
-                                lines[idx].text.includes("You have done it. Enjoy this victory while it lasts, World Guardian") )) 
+      else if (isAttackable && (lines[idx].text.includes("We wouldn't have managed that without") ||
+                                lines[idx].text.includes("The Cathedral is safe...for now") ||
+                                lines[idx].text.includes("You have done it. Enjoy this victory while it lasts, World Guardian") ))
       {
         chatEndDetected = true;
 
@@ -317,61 +301,7 @@ function readChatbox()
         }
       }
 
-      // Check for lines for statue updates if the indicator is enabled
-      else if (extendedModeSetting == 0) {
-        // Statue has all materials
-        if (lines[idx].text.includes("Go - restore") || 
-            lines[idx].text.includes("statue can be restored") ||
-            lines[idx].text.includes("Now - rekindle")) 
-        {
-          if (lines[idx].text.includes("Ophalmi")) {
-            $("#OphalmiStatue").attr("src", "assets/statues/Ophalmi - calcified-timber - complete.png");
-          }
-          else if (lines[idx].text.includes("Sana")) {
-            $("#SanaStatue").attr("src", "assets/statues/Sana - spores-algae - complete.png");
-          }
-          else if (lines[idx].text.includes("Tagga")) {
-            $("#TaggaStatue").attr("src", "assets/statues/Tagga - timber-spores - complete.png");
-          }
-          else if (lines[idx].text.includes("Vendi")) {
-            $("#VendiStatue").attr("src", "assets/statues/Vendi - algae-calcified - complete.png");
-          }
-        }
-
-        // Statue is built/restored (variant 1)
-        else if (lines[idx].text.includes("will answer our call") ||
-                  lines[idx].text.includes("The statue is restored - awaken")) 
-        {
-          if (lines[idx].text.includes("Ophalmi")) {
-            $("#OphalmiStatue").attr("src", "assets/statues/Ophalmi - calcified-timber - built.png");
-          }
-          else if (lines[idx].text.includes("Sana")) {
-            $("#SanaStatue").attr("src", "assets/statues/Sana - spores-algae - built.png");
-          }
-          else if (lines[idx].text.includes("Tagga")) {
-            $("#TaggaStatue").attr("src", "assets/statues/Tagga - timber-spores - built.png");
-          }
-          else if (lines[idx].text.includes("Vendi")) {
-            $("#VendiStatue").attr("src", "assets/statues/Vendi - algae-calcified - built.png");
-          }
-        }
-
-        // Statue is built/restored (variant 2)
-        else if (lines[idx].text.includes("Awaken the")) {
-          if (lines[idx].text.includes("indomitable fisher")) {
-            $("#OphalmiStatue").attr("src", "assets/statues/Ophalmi - calcified-timber - built.png");
-          }
-          else if (lines[idx].text.includes("prodigious woodcrafter")) {
-            $("#SanaStatue").attr("src", "assets/statues/Sana - spores-algae - built.png");
-          }
-          else if (lines[idx].text.includes("flint-hearted miner")) {
-            $("#TaggaStatue").attr("src", "assets/statues/Tagga - timber-spores - built.png");
-          }
-          else if (lines[idx].text.includes("dauntless hunter")) {
-            $("#VendiStatue").attr("src", "assets/statues/Vendi - algae-calcified - built.png");
-          }
-        }
-      }
+      // Statue updates are not required for Sanctum of Rebirth
     }
     else if (debugMode) {
       console.log("Error: Old message!");
@@ -520,7 +450,7 @@ function calculateTimeAndUpdateUI() {
       for (var key in attacks) {
         // Check if this is an incoming attack
         if ((parseInt(key) - 4) < adjTime && adjTime < (parseInt(key) + 9)) {
-          // Check if this is the last attack (Mid energy fungi)
+          // Check if this is the last attack of the rotation
           if (count == (Object.keys(attacks).length - 1)) {
             if (adjTime < (parseInt(key) + 7)) {
               incomingAttack = key;
@@ -647,13 +577,6 @@ function stopEncounter() {
 
   updateTooltip();
 
-  // Reset statue indicators if enabled
-  if (extendedModeSetting == 0) {
-    $("#OphalmiStatue").attr("src", "assets/statues/Ophalmi - calcified-timber.png");
-    $("#SanaStatue").attr("src", "assets/statues/Sana - spores-algae.png");
-    $("#TaggaStatue").attr("src", "assets/statues/Tagga - timber-spores.png");
-    $("#VendiStatue").attr("src", "assets/statues/Vendi - algae-calcified.png");
-  }
 
   elid("recalButton").classList.add("d-none");
   message("Encounter ended\nAwaiting boss start...");
@@ -670,7 +593,7 @@ function startAttack() {
   
   // Change messages in incoming/upcoming attacks boxes
   message("","upcomingBox");
-  message("Croesus is vulnerable,\nattack the core!");
+  message("The boss is vulnerable! Attack now.");
   
   attackStartDate = Date.now();
 }
@@ -752,39 +675,13 @@ function updateUISize(showModal=false) {
     compactModeSetting = parseInt(localStorage.susCompactMode);
   }
 
-  if (localStorage.susExtendedMode) {
-    extendedModeSetting = parseInt(localStorage.susExtendedMode);
-  }
 
-  if (compactModeSetting === 0 && extendedModeSetting === 0) {
+  if (compactModeSetting === 0) {
     hideUpcomingbox();
-
-    showStatueIndicator();
-
-    compactStatueIndicator();
-
-    A1lib.identifyApp("appconfig_statues_compact.json");
-  }
-  else if (compactModeSetting === 0) {
-    hideUpcomingbox();
-
-    hideStatueIndicator();
 
     A1lib.identifyApp("appconfig_compact.json");
-  }
-  else if (extendedModeSetting === 0) {
+  } else {
     showUpcomingbox();
-
-    showStatueIndicator();
-    
-    uncompactStatueIndicator();
-
-    A1lib.identifyApp("appconfig_statues.json");
-  }
-  else {
-    showUpcomingbox();
-
-    hideStatueIndicator();
 
     A1lib.identifyApp("appconfig.json");
   }
@@ -792,7 +689,7 @@ function updateUISize(showModal=false) {
   if (showModal) {
     $('#resizeModal').modal('show');
 
-    console.log("UI mode settings changed to: " + compactModeSetting + " (compact mode), and " + extendedModeSetting + " (statue indicator)");
+    console.log("UI mode setting changed to: " + compactModeSetting + " (compact mode)");
   }
 }
 

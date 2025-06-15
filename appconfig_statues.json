@@ -1,6 +1,6 @@
 {
     "appName": "SusAlert",
-    "description": "Keeps track of the croesus' attacks and gives onscreen warnings.",
+    "description": "Keeps track of Sanctum of Rebirth attacks and gives onscreen warnings.",
     "appUrl": "./index.html",
     "configUrl": "./appconfig.json",
     "iconUrl": "./assets/favicon.png",

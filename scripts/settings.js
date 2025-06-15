@@ -1,7 +1,6 @@
 let tooltipSetting = 1;
 let styleSetting = 0;
 let compactModeSetting = 1;
-let extendedModeSetting = 1;
 let crystalMaskSetting = 1;
 let crystalMaskBorderSetting = 1;
 let crystalMaskSoundSetting = 0;
@@ -57,12 +56,6 @@ $('document').ready(function() {
     window.opener.updateUISize(true);
   });
 
-  $(".extendedModeSelect").change(function () {
-    extendedModeSetting = parseInt($(this).val());
-    localStorage.setItem("susExtendedMode", extendedModeSetting);
-
-    window.opener.updateUISize(true);
-  });
 
   $(".cMask").change(function () {
     crystalMaskSetting = parseInt($(this).val());
@@ -168,12 +161,6 @@ $('document').ready(function() {
 
   $(".compactModeSelect").val(compactModeSetting);
 
-  // Check for saved styleSetting & set it
-  if (localStorage.susExtendedMode) {
-    extendedModeSetting = parseInt(localStorage.susExtendedMode);
-  }
-
-  $(".extendedModeSelect").val(extendedModeSetting);
 
   // Check for saved crystalmask detection & set it
   if (localStorage.susCMask) {
